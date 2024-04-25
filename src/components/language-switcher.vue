@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n({ useScope: 'global' })
@@ -21,11 +22,11 @@ const supportedLanguages = [
     { code: 'de', name: 'Deutsch', icon: '/de.svg' }
 ]
 
-const currentLocale = locale.value
+let currentLocale = ref(locale.value)
 
 const switchLanguage = (newLocale) => {
     locale.value = newLocale
-    currentLocale = newLocale
+    currentLocale.value = newLocale
 }
 </script>
 
@@ -41,7 +42,7 @@ const switchLanguage = (newLocale) => {
 .language-button {
     margin-left: 5px;
     cursor: pointer;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 .language-button.active {

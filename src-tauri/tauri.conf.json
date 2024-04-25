@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "War of Pirates Launcher",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "tauri": {
     "allowlist": {
@@ -31,7 +31,8 @@
       "http": {
         "all": true,
         "scope": [
-          "https://warofpirates.com.tr/version"
+          "https://warofpirates.com.tr/version",
+          "https://warofpirates.com.tr/changelog"
         ]
       },
       "window": {
