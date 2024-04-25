@@ -1,13 +1,74 @@
 <template>
-    <div id="home">
+    <div v-if="state == 'splash'" id="splash-container">
+        War of Pirates
+    </div>
+    <div v-if="state == 'download'" id="download-container">
+        <div id="title">War of Pirates</div>
+        <p>Welcome Aboard Captain! Let's Download The Game: </p>
+        <div id="download-location-wrapper">
+            <DownloadLocation></DownloadLocation>
+        </div>
+    </div>
+    <div v-if="state == 'update'" id="download-container">
+        <div id="title">War of Pirates</div>
+        <p>There is a new version of the game! Let's update it. </p>
+        <div id="changelog-wrapper">
+            <Update :location="location"></Update>
+        </div>
+    </div>
+    <!-- <div id="home">
         <div>
             <h1>War of Pirates</h1>
             <button @click="buttonAction()">{{ buttonLabel }}</button>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <style scoped>
+#splash-container {
+    width: 100dvw;
+    height: 100dvh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../assets/background.jpg");
+    background-position: center;
+    background-size: cover;
+    font-size: 5rem;
+    display: grid;
+    place-items: center;
+    font-family: "WhiteStorm";
+    color: white;
+}
+
+#download-container {
+    width: 100dvw;
+    height: 100dvh;
+    box-sizing: border-box;
+    padding: 1rem;
+    background-color: #231709;
+}
+
+#download-container #title {
+    font-size: 3.5rem;
+    font-family: "WhiteStorm";
+    color: white;
+}
+
+#download-container p {
+    font-size: 1.5rem;
+    color: white;
+}
+
+#download-container #download-location-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10rem;
+}
+
+#changelog-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 #home {
     height: 100dvh;
     display: grid;
@@ -41,18 +102,18 @@ span {
 
 
 <script setup>
+import DownloadLocation from './download-location.vue'
+import Update from './update.vue'
 import { onMounted, ref } from 'vue';
 import { BaseDirectory, exists, readTextFile } from '@tauri-apps/api/fs';
-import { useRouter } from 'vue-router'
-import { invoke, path } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api';
 import { join } from '@tauri-apps/api/path';
 import { fetch } from '@tauri-apps/api/http';
-import { open } from '@tauri-apps/api/shell';
+import { appWindow, LogicalSize } from '@tauri-apps/api/window';
 
-const router = useRouter()
+const state = ref("splash")
 
-let buttonAction = ref(() => { })
-let buttonLabel = ref("Donwload")
+const location = ref("")
 
 async function init() {
 
@@ -65,46 +126,49 @@ async function init() {
             const latest = await fetch('https://warofpirates.com.tr/version', { method: 'GET', })
 
             if (version["version"] == latest.data) {
-                console.log("latest")
-                console.log(latest)
                 stateStart(gameExec)
             } else {
                 stateUpdate(version["location"])
             }
 
-            console.log("5")
         } else {
-            console.log("2")
             stateDownload()
         }
 
     } else {
-        console.log("3")
         stateDownload()
     }
 }
 
-function stateDownload() {
-    buttonAction.value = () => router.push("/download-options")
-    buttonLabel.value = "Download"
+async function stateDownload() {
+    state.value = "download"
+    expand()
 }
 
-function stateUpdate(gameLocation) {
-    buttonAction.value = () => {
-        localStorage.setItem("download-location", gameLocation)
-        router.push("/download/update")
-    }
-    buttonLabel.value = "Update"
+async function stateUpdate(gameLocation) {
+    state.value = "update"
+    expand()
+    location.value = gameLocation
+}
+
+async function expand() {
+    await appWindow.setSize(new LogicalSize(800, 600))
+    await appWindow.setResizable(true)
+    await appWindow.setDecorations(true)
+    await appWindow.setSkipTaskbar(false)
+    await appWindow.center()
 }
 
 function stateStart(gameExec) {
-    buttonAction.value = () => invoke("run", { path: gameExec })
-    buttonLabel.value = "Start"
+    invoke("run", { path: gameExec })
+    appWindow.close()
 }
 
 
 
 onMounted(() => {
-    init()
+    setTimeout(() => {
+        init()
+    }, 2000);
 })
 </script>

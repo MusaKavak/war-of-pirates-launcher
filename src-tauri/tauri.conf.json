@@ -33,13 +33,20 @@
         "scope": [
           "https://warofpirates.com.tr/version"
         ]
+      },
+      "window": {
+        "all": true
       }
     },
     "windows": [
       {
-        "title": "war-of-pirates-launcher",
-        "width": 800,
-        "height": 600
+        "title": "War Of Pirates Launcher",
+        "width": 500,
+        "height": 280,
+        "decorations": false,
+        "center": true,
+        "resizable": false,
+        "skipTaskbar": true
       }
     ],
     "security": {
