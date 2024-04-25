@@ -9,10 +9,10 @@
                 <span>{{ progress }}</span>
             </div>
             <div id="finished-container" v-if="finished">
-                <p>War of Pirates has been successfully installed on your computer.</p>
+                <p>{{$t('download.finishedMessage')}}</p>
                 <div id="actions">
-                    <button class="outlined" @click="appWindow.close()">Exit</button>
-                    <button class="primary" @click="play()">Play</button>
+                    <button class="outlined" @click="appWindow.close()">{{$t('download.exit')}}</button>
+                    <button class="primary" @click="play()">{{$t('download.play')}}</button>
                 </div>
             </div>
         </div>
@@ -26,11 +26,13 @@ import { onMounted, ref } from 'vue';
 import { fetch } from '@tauri-apps/api/http';
 import { BaseDirectory, writeTextFile } from '@tauri-apps/api/fs';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter()
+const {t} = useI18n()
 
 let progress = ref("0%")
-let status = ref("Downloading")
+let status = ref(t('download.downloading'))
 let progressVisible = ref(true)
 let finished = ref(false)
 
@@ -51,7 +53,7 @@ async function listenProgress() {
     })
 
     await appWindow.listen('unpacking', (event) => {
-        status.value = "Unpacking"
+        status.value = t('download.unpacking')
         progressVisible.value = false
     })
 
@@ -66,7 +68,7 @@ async function listenProgress() {
 
             localStorage.setItem("download-location", "")
 
-            status.value = "Finished"
+            status.value = t('download.finished')
             finished.value = true
         })
 

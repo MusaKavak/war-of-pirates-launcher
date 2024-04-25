@@ -1,6 +1,6 @@
 <template>
     <div id="download-location-container">
-        <div>Select a download location</div>
+        <div>{{ $t('downloadLocation.message')}}</div>
         <div id="download-input">
             <input v-model="path" type="text" id="location-input">
             <svg @click="selectDir()" viewBox="0 0 24 24" fill="none">
@@ -10,7 +10,7 @@
             </svg>
         </div>
         <div id="download-button-wrapper">
-            <button id="download-button" @click="continueToDownload()">Download</button>
+            <button id="download-button" @click="continueToDownload()">{{ $t('downloadLocation.download')}}</button>
         </div>
     </div>
 </template>

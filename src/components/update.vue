@@ -2,7 +2,7 @@
     <div id="changelog-container">
         <div id="changelog-card"></div>
         <div id="download-button-wrapper">
-            <button @click="update()" id="download-button">Update</button>
+            <button @click="update()" id="download-button">{{$t('update')}}</button>
         </div>
     </div>
 </template>

@@ -1,17 +1,18 @@
 <template>
+    <LanguageSwitcher v-if="state != 'splash'"></LanguageSwitcher>
     <div v-if="state == 'splash'" id="splash-container">
         War of Pirates
     </div>
     <div v-if="state == 'download'" id="download-container">
         <div id="title">War of Pirates</div>
-        <p>Welcome Aboard Captain! Let's Download The Game: </p>
+        <p> {{ $t('home.downloadMessage') }} </p>
         <div id="download-location-wrapper">
             <DownloadLocation></DownloadLocation>
         </div>
     </div>
     <div v-if="state == 'update'" id="download-container">
         <div id="title">War of Pirates</div>
-        <p>There is a new version of the game! Let's update it. </p>
+        <p> {{ $t('home.updateMessage') }}</p>
         <div id="changelog-wrapper">
             <Update :location="location"></Update>
         </div>
@@ -102,6 +103,7 @@ span {
 
 
 <script setup>
+import LanguageSwitcher from './language-switcher.vue'
 import DownloadLocation from './download-location.vue'
 import Update from './update.vue'
 import { onMounted, ref } from 'vue';
