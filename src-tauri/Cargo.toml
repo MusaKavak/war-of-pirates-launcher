@@ -1,9 +1,10 @@
 [package]
 name = "war-of-pirates-launcher"
-version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+version = "0.1.0"
+description = "A game launcher&updater for War of Pirates "
+authors = ["Musa Kavak musa0kavak@gmail.com"]
 edition = "2021"
+repository = "https://github.com/MusaKavak/war-of-pirates-launcher"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,7 +12,8 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "window-all",
+tauri = { version = "1", features = [
+    "window-all",
     "http-all",
     "dialog-open",
     "fs-all",

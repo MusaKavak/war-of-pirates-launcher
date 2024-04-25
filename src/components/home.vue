@@ -17,12 +17,6 @@
             <Update :location="location"></Update>
         </div>
     </div>
-    <!-- <div id="home">
-        <div>
-            <h1>War of Pirates</h1>
-            <button @click="buttonAction()">{{ buttonLabel }}</button>
-        </div>
-    </div> -->
 </template>
 
 <style scoped>
@@ -159,6 +153,7 @@ async function expand() {
     await appWindow.setDecorations(true)
     await appWindow.setSkipTaskbar(false)
     await appWindow.center()
+    await appWindow.setFocus()
 }
 
 function stateStart(gameExec) {
