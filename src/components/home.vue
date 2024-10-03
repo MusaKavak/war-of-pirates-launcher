@@ -23,7 +23,8 @@
 #splash-container {
     width: 100dvw;
     height: 100dvh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../assets/background.jpg");
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../assets/background.jpg"); */
+    background-color: rgba(255, 255, 255, 0.0);
     background-position: center;
     background-size: cover;
     font-size: 5rem;
@@ -38,7 +39,9 @@
     height: 100dvh;
     box-sizing: border-box;
     padding: 1rem;
-    background-color: #231709;
+    /* background-color: #231709; */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../assets/background.png");
+
 }
 
 #download-container #title {
